@@ -24,7 +24,7 @@ class WebArchiveRenderer extends AbstractRenderer implements RendererInterface
             'mediaUrl' => $media->originalUrl(),
             'replayBase' => $view->assetUrl('replay/', 'WebArchive', false, false),
             'startUrl' => $mediaData['start_url'] ?? null,
-            'embedMode' => $this->settings->get('webarchive_embed', 'default'),
+            'embedMode' => $mediaData['embed_mode'] ?? $this->settings->get('webarchive_embed_mode', 'default'),
         ]);
     }
 }

@@ -1,10 +1,12 @@
 <?php
 namespace WebArchive;
 
+use WebArchive\Service\FileRenderer\WebArchiveRendererFactory;
+
 return [
     'file_renderers' => [
         'factories' => [
-            'web-archive' => Service\FileRenderer\WebArchiveRendererFactory::class,
+            'web-archive' => WebArchiveRendererFactory::class,
         ],
         'aliases' => [
             'application/wacz' => 'web-archive',
@@ -13,7 +15,7 @@ return [
     ],
     'view_manager' => [
         'template_path_stack' => [
-            dirname(__DIR__) . '/view',
+            sprintf('%s/../view', __DIR__),
         ],
     ],
     'translator' => [

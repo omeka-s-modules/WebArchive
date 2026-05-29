@@ -1,0 +1,10 @@
+<dl>
+    <div class="meta-group">
+        <dt><?= $this->translate('Starting URL') ?></dt>
+        <dd class="value"><?= $startUrl ? $this->escapeHtml($startUrl) : $this->translate('[none]') ?></dd>
+    </div>
+    <div class="meta-group">
+        <dt><?= $this->translate('Embed mode') ?></dt>
+        <dd class="value"><?= isset($embedModes[$embedMode]) ? $this->translate($embedModes[$embedMode]) : $this->translate('[Site default]') ?></dd>
+    </div>
+</dl>

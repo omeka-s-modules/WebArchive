@@ -3,6 +3,9 @@ namespace WebArchive;
 
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
+use Laminas\Form\Element\Select;
+use Laminas\Form\Element\Url;
+use Laminas\Form\Form;
 use Laminas\Mvc\Controller\AbstractController;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Renderer\PhpRenderer;
@@ -12,6 +15,13 @@ use WebArchive\Form\ConfigForm;
 class Module extends AbstractModule
 {
     const MEDIA_TYPES = ['application/wacz', 'application/warc'];
+
+    const EMBED_MODES = [
+        'default' => 'Default', // @translate
+        'full' => 'Full', // @translate
+        'replayonly' => 'Replay only', // @translate
+        'replay-with-info' => 'Replay with info', // @translate
+    ];
 
     public function getConfig()
     {
@@ -44,7 +54,7 @@ class Module extends AbstractModule
     public function uninstall(ServiceLocatorInterface $serviceLocator)
     {
         $settings = $serviceLocator->get('Omeka\Settings');
-        $settings->delete('webarchive_embed');
+        $settings->delete('webarchive_embed_mode');
     }
 
     public function getConfigForm(PhpRenderer $renderer)
@@ -53,7 +63,7 @@ class Module extends AbstractModule
         $settings = $services->get('Omeka\Settings');
         $form = $services->get('FormElementManager')->get(ConfigForm::class);
         $form->setData([
-            'webarchive_embed' => $settings->get('webarchive_embed', 'default'),
+            'webarchive_embed_mode' => $settings->get('webarchive_embed_mode', 'default'),
         ]);
         return $renderer->formCollection($form, false);
     }
@@ -69,7 +79,7 @@ class Module extends AbstractModule
             return false;
         }
         $formData = $form->getData();
-        $settings->set('webarchive_embed', $formData['webarchive_embed']);
+        $settings->set('webarchive_embed_mode', $formData['webarchive_embed_mode']);
         return true;
     }
 
@@ -83,12 +93,12 @@ class Module extends AbstractModule
         $sharedEventManager->attach(
             'Omeka\Controller\Admin\Media',
             'view.edit.form.advanced',
-            [$this, 'addStartUrlField']
+            [$this, 'addMediaFields']
         );
         $sharedEventManager->attach(
             'Omeka\Controller\Admin\Media',
             'view.show.after',
-            [$this, 'showStartUrl']
+            [$this, 'showMediaFields']
         );
     }
 
@@ -123,36 +133,61 @@ class Module extends AbstractModule
             }
         }
 
-        // Persist starting URL on UPDATE
+        // Persist per-media fields on UPDATE
         if ($request->getOperation() === 'update' && in_array($entity->getMediaType(), self::MEDIA_TYPES)) {
             $content = $request->getContent();
-            if (array_key_exists('web_archive_start_url', $content)) {
-                $data = $entity->getData() ?? [];
-                $data['start_url'] = $content['web_archive_start_url'] ?: null;
-                $entity->setData($data);
+            $data = $entity->getData() ?? [];
+            if (array_key_exists('webarchive_start_url', $content)) {
+                $data['start_url'] = $content['webarchive_start_url'] ?: null;
             }
+            if (array_key_exists('webarchive_embed_mode', $content)) {
+                $data['embed_mode'] = $content['webarchive_embed_mode'] ?: null;
+            }
+            $entity->setData($data);
         }
     }
 
-    public function addStartUrlField(Event $event)
+    public function addMediaFields(Event $event)
     {
         $view = $event->getTarget();
         $media = $view->resource;
         if (!$media || !in_array($media->mediaType(), self::MEDIA_TYPES)) {
             return;
         }
-        $startUrl = ($media->mediaData() ?? [])['start_url'] ?? '';
-        echo $view->partial('common/media-fields', ['startUrl' => $startUrl]);
+        $mediaData = $media->mediaData() ?? [];
+
+        $startUrl = new Url('webarchive_start_url');
+        $startUrl->setLabel('Starting URL') // @translate
+            ->setOption('info', 'Enter the original URL of the page to open first. Leave blank to show the archive\'s pages list, where viewers can browse all captured pages. Required if embed mode is set to "Replay only".') // @translate
+            ->setAttribute('id', 'web-archive-start-url')
+            ->setAttribute('value', $mediaData['start_url'] ?? '');
+
+        $embedMode = new Select('webarchive_embed_mode');
+        $embedMode->setLabel('Embed mode') // @translate
+            ->setOption('info', 'Controls what the player shows around the archived content. "Default" and "Full" both show the full interface with navigation; "Full" differs only in sizing behavior. "Replay only" shows just the archived page with no controls, and requires a starting URL to be meaningful. "Replay with info" shows the archived page alongside a metadata panel with title, date, and source URL. Leave blank to use the site default.') // @translate
+            ->setAttribute('id', 'web-archive-embed-mode')
+            ->setEmptyOption('[Site default]') // @translate
+            ->setValueOptions(self::EMBED_MODES)
+            ->setValue($mediaData['embed_mode'] ?? '');
+
+        $form = new Form;
+        $form->add($startUrl);
+        $form->add($embedMode);
+        echo $view->partial('common/media-fields-edit', ['form' => $form]);
     }
 
-    public function showStartUrl(Event $event)
+    public function showMediaFields(Event $event)
     {
         $view = $event->getTarget();
         $media = $view->media;
         if (!$media || !in_array($media->mediaType(), self::MEDIA_TYPES)) {
             return;
         }
-        $startUrl = ($media->mediaData() ?? [])['start_url'] ?? null;
-        echo $view->partial('common/media-fields', ['startUrl' => $startUrl, 'readOnly' => true]);
+        $mediaData = $media->mediaData() ?? [];
+        echo $view->partial('common/media-fields-show', [
+            'startUrl' => $mediaData['start_url'] ?? null,
+            'embedMode' => $mediaData['embed_mode'] ?? null,
+            'embedModes' => self::EMBED_MODES,
+        ]);
     }
 }
