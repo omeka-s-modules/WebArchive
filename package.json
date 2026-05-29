@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "dependencies": {
+    "replaywebpage": "2.4.6"
+  },
+  "scripts": {
+    "build": "cp node_modules/replaywebpage/ui.js asset/js/ui.js && cp node_modules/replaywebpage/sw.js asset/replay/sw.js"
+  }
+}

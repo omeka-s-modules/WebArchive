@@ -1,0 +1,20 @@
+<?php if (!empty($readOnly)): ?>
+<div class="field">
+    <div class="field-meta">
+        <label><?= $this->translate('Starting URL') ?></label>
+    </div>
+    <div class="inputs">
+        <p><?= $startUrl ? $this->escapeHtml($startUrl) : $this->translate('[none]') ?></p>
+    </div>
+</div>
+<?php else: ?>
+<div class="field">
+    <div class="field-meta">
+        <label for="web-archive-start-url"><?= $this->translate('Starting URL') ?></label>
+        <p class="field-description"><?= $this->translate('Enter the original URL of the page to open first. Leave blank to show the archive\'s pages list, where viewers can browse all captured pages. Required if embed mode is set to "Replay only".') ?></p>
+    </div>
+    <div class="inputs">
+        <input type="url" name="web_archive_start_url" id="web-archive-start-url" value="<?= $this->escapeHtml($startUrl ?? '') ?>">
+    </div>
+</div>
+<?php endif; ?>
