@@ -5,6 +5,6 @@
     </div>
     <div class="meta-group">
         <dt><?= $this->translate('Embed mode') ?></dt>
-        <dd class="value"><?= isset($embedModes[$embedMode]) ? $this->translate($embedModes[$embedMode]) : $this->translate('[Site default]') ?></dd>
+        <dd class="value"><?= $this->translate($embedModes[$embedMode] ?? '[Site default]') ?></dd>
     </div>
 </dl>

@@ -5,7 +5,6 @@ use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Url;
-use Laminas\Form\Form;
 use Laminas\Mvc\Controller\AbstractController;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Renderer\PhpRenderer;
@@ -160,7 +159,7 @@ class Module extends AbstractModule
         $startUrl->setLabel('Starting URL') // @translate
             ->setOption('info', 'Enter the original URL of the page to open first. Leave blank to show the archive\'s pages list, where viewers can browse all captured pages. Required if embed mode is set to "Replay only".') // @translate
             ->setAttribute('id', 'web-archive-start-url')
-            ->setAttribute('value', $mediaData['start_url'] ?? '');
+            ->setValue($mediaData['start_url'] ?? '');
 
         $embedMode = new Select('webarchive_embed_mode');
         $embedMode->setLabel('Embed mode') // @translate
@@ -170,10 +169,7 @@ class Module extends AbstractModule
             ->setValueOptions(self::EMBED_MODES)
             ->setValue($mediaData['embed_mode'] ?? '');
 
-        $form = new Form;
-        $form->add($startUrl);
-        $form->add($embedMode);
-        echo $view->partial('common/media-fields-edit', ['form' => $form]);
+        echo $view->partial('common/media-fields-edit', ['elements' => [$startUrl, $embedMode]]);
     }
 
     public function showMediaFields(Event $event)

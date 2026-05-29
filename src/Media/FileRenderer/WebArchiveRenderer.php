@@ -9,7 +9,7 @@ use Omeka\Settings\Settings;
 
 class WebArchiveRenderer extends AbstractRenderer implements RendererInterface
 {
-    protected $settings;
+    protected Settings $settings;
 
     public function __construct(Settings $settings)
     {
