@@ -1,6 +1,6 @@
 # Web Archive
 
-An [Omeka S](https://omeka.org/s/) module for ingesting and playing back web archive files (WACZ and WARC) as media items. Archived web content is replayed inline using [ReplayWeb.page](https://replayweb.page).
+An [Omeka S](https://omeka.org/s/) module for ingesting and replaying web archive files.
 
 ## Installation
 

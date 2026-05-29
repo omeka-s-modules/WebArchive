@@ -1,0 +1,88 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Rubén Alcaraz Martínez <rubenalcarazmartinez@gmail.com>, 2026
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-29 13:27-0400\n"
+"PO-Revision-Date: 2026-05-29 13:33+0000\n"
+"Last-Translator: Rubén Alcaraz Martínez <rubenalcarazmartinez@gmail.com>, 2026\n"
+"Language-Team: Catalan (Spain) (https://app.transifex.com/omeka/teams/14184/ca_ES/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: view/common/media-fields-show.phtml:3
+msgid "Starting URL"
+msgstr "URL inicial"
+
+#: view/common/media-fields-show.phtml:4
+msgid "[none]"
+msgstr "[cap]"
+
+#: view/common/media-fields-show.phtml:7
+msgid "Embed mode"
+msgstr ""
+
+#: view/common/media-fields-show.phtml:8
+msgid "[Site default]"
+msgstr ""
+
+#: src/Form/ConfigForm.php:15
+msgid "Default embed mode"
+msgstr "Mode d'incrustació predeterminat"
+
+#: src/Form/ConfigForm.php:16
+msgid ""
+"Controls what the player shows around the archived content. \"Default\" and "
+"\"Full\" both show the full interface with navigation; \"Full\" differs only"
+" in sizing behavior. \"Replay only\" shows just the archived page with no "
+"controls, and requires a starting URL to be meaningful. \"Replay with info\""
+" shows the archived page alongside a metadata panel with title, date, and "
+"source URL."
+msgstr ""
+"Controla què mostra el reproductor al voltant del contingut arxivat. "
+"\"Predeterminat\" i \"Complet\" mostren la interfície completa amb "
+"navegació; \"Complet\" només es diferencia pel comportament d'ajust de la "
+"mida. \"Només reproducció\" mostra només la pàgina arxivada, sense controls,"
+" i requereix un URL inicial per tenir sentit. \"Reproducció amb informació\""
+" mostra la pàgina arxivada al costat d'un panell de metadades amb el títol, "
+"la data i l'URL d'origen."
+
+#: Module.php:22
+msgid "Replay only"
+msgstr "Només reproducció"
+
+#: Module.php:23
+msgid "Replay with info"
+msgstr "Reproducció amb informació"
+
+#: Module.php:161
+msgid ""
+"Enter the original URL of the page to open first. Leave blank to show the "
+"archive's pages list, where viewers can browse all captured pages. Required "
+"if embed mode is set to \"Replay only\"."
+msgstr ""
+"Introduïu l'URL original de la pàgina que s'ha d'obrir primer. Deixeu-ho en "
+"blanc per mostrar la llista de pàgines de l'arxiu, des d'on els usuaris "
+"poden navegar per totes les pàgines capturades. És obligatori si el mode "
+"d'incrustació està definit com a «Només reproducció»."
+
+#: Module.php:167
+msgid ""
+"Controls what the player shows around the archived content. \"Default\" and "
+"\"Full\" both show the full interface with navigation; \"Full\" differs only"
+" in sizing behavior. \"Replay only\" shows just the archived page with no "
+"controls, and requires a starting URL to be meaningful. \"Replay with info\""
+" shows the archived page alongside a metadata panel with title, date, and "
+"source URL. Leave blank to use the site default."
+msgstr ""

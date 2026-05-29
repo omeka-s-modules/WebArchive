@@ -110,15 +110,15 @@ class Module extends AbstractModule
         // Correct MIME types on CREATE: finfo misdetects these formats, and the file
         // validator runs before this event, so we accept broad types and correct here.
         if ($request->getOperation() === 'create') {
-            // finfo detects WACZ as application/zip (WACZ is ZIP-based)
+            // WACZ is ZIP-based; finfo may detect it as application/zip or other types. Correct by extension.
             if ($entity->getExtension() === 'wacz'
-                && $entity->getMediaType() === 'application/zip'
+                && $entity->getMediaType() !== 'application/wacz'
             ) {
                 $entity->setMediaType('application/wacz');
             }
 
-            // finfo detects gzip-compressed WARCs as application/gzip; correct by extension.
-            // Also a safety net for older libmagic that doesn't recognise application/warc.
+            // Modern libmagic detects uncompressed WARCs as application/warc; gzip-compressed WARCs
+            // as application/gzip. Older libmagic may return application/octet-stream. Correct by extension.
             if ($entity->getExtension() === 'warc'
                 && $entity->getMediaType() !== 'application/warc'
             ) {
@@ -127,7 +127,7 @@ class Module extends AbstractModule
 
             // .warc.gz files have extension 'gz'; detect by source filename
             if ($entity->getMediaType() === 'application/gzip'
-                && str_ends_with(parse_url($entity->getSource(), PHP_URL_PATH) ?? $entity->getSource(), '.warc.gz')
+                && str_ends_with($entity->getSource(), '.warc.gz')
             ) {
                 $entity->setMediaType('application/warc');
             }
