@@ -21,10 +21,10 @@ class WebArchiveRenderer extends AbstractRenderer implements RendererInterface
         $view->headScript()->appendFile($view->assetUrl('js/ui.js', 'WebArchive'));
         $mediaData = $media->mediaData() ?? [];
         return $view->partial('omeka/media/renderer/web-archive', [
-            'mediaUrl'   => $media->originalUrl(),
+            'mediaUrl' => $media->originalUrl(),
             'replayBase' => $view->assetUrl('replay/', 'WebArchive', false, false),
-            'startUrl'   => $mediaData['start_url'] ?? null,
-            'embedMode'  => $this->settings->get('webarchive_embed', 'default'),
+            'startUrl' => $mediaData['start_url'] ?? null,
+            'embedMode' => $this->settings->get('webarchive_embed', 'default'),
         ]);
     }
 }

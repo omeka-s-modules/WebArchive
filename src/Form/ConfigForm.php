@@ -12,12 +12,11 @@ class ConfigForm extends Form
             'name' => 'webarchive_embed',
             'options' => [
                 'label' => 'Default embed mode', // @translate
-                'info' => '<ul><li><strong>Default</strong>: full player interface with navigation.</li><li><strong>Full</strong>: same as Default, differs only in sizing behavior.</li><li><strong>Replay only</strong>: archived page with no controls — only useful when a starting URL is also set on the media item.</li><li><strong>Replay with info</strong>: archived page alongside a metadata panel with title, date, and source URL.</li></ul>', // @translate
-                'escape_info' => false,
+                'info' => 'Controls what the player shows around the archived content. "Default" and "Full" both show the full interface with navigation; "Full" differs only in sizing behavior. "Replay only" shows just the archived page with no controls, and requires a starting URL to be meaningful. "Replay with info" shows the archived page alongside a metadata panel with title, date, and source URL.', // @translate
                 'value_options' => [
-                    'default'          => 'Default', // @translate
-                    'full'             => 'Full', // @translate
-                    'replayonly'       => 'Replay only', // @translate
+                    'default' => 'Default', // @translate
+                    'full' => 'Full', // @translate
+                    'replayonly' => 'Replay only', // @translate
                     'replay-with-info' => 'Replay with info', // @translate
                 ],
             ],

@@ -16,4 +16,13 @@ return [
             dirname(__DIR__) . '/view',
         ],
     ],
+    'translator' => [
+        'translation_file_patterns' => [
+            [
+                'type' => 'gettext',
+                'base_dir' => sprintf('%s/../language', __DIR__),
+                'pattern' => '%s.mo',
+            ],
+        ],
+    ],
 ];

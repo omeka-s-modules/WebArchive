@@ -12,7 +12,7 @@ use WebArchive\Form\ConfigForm;
 class Module extends AbstractModule
 {
     const MEDIA_TYPES = ['application/wacz', 'application/warc'];
-    
+
     public function getConfig()
     {
         return include sprintf('%s/config/module.config.php', __DIR__);
@@ -101,7 +101,7 @@ class Module extends AbstractModule
         // validator runs before this event, so we accept broad types and correct here.
         if ($request->getOperation() === 'create') {
             // finfo detects WACZ as application/zip (WACZ is ZIP-based)
-            if ($entity->getExtension() === 'wacz' 
+            if ($entity->getExtension() === 'wacz'
                 && $entity->getMediaType() === 'application/zip'
             ) {
                 $entity->setMediaType('application/wacz');
