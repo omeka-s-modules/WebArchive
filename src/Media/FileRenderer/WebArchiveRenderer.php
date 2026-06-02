@@ -18,11 +18,11 @@ class WebArchiveRenderer extends AbstractRenderer implements RendererInterface
 
     public function render(PhpRenderer $view, MediaRepresentation $media, array $options = [])
     {
-        $view->headScript()->appendFile($view->assetUrl('js/ui.js', 'WebArchive'));
+        $view->headScript()->appendFile($view->assetUrl('js/replaywebpage/ui.js', 'WebArchive'));
         $mediaData = $media->mediaData() ?? [];
         return $view->partial('omeka/media/renderer/web-archive', [
             'mediaUrl' => $media->originalUrl(),
-            'replayBase' => $view->assetUrl('replay/', 'WebArchive', false, false),
+            'replayBase' => $view->assetUrl('js/replaywebpage/', 'WebArchive', false, false),
             'startUrl' => $mediaData['start_url'] ?? null,
             'embedMode' => $mediaData['embed_mode'] ?? $this->settings->get('webarchive_embed_mode', 'default'),
         ]);

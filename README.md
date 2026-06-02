@@ -8,7 +8,7 @@ See general end user documentation for [Installing a module](http://omeka.org/s/
 
 ## Asset build
 
-The ReplayWeb.page JS assets (`asset/js/ui.js`, `asset/replay/sw.js`) are copied from the `replaywebpage` npm package. To update the player version:
+The ReplayWeb.page JS assets (`asset/js/replaywebpage/ui.js`, `asset/js/replaywebpage/sw.js`) are copied from the `replaywebpage` npm package. To update the player version:
 
 ```sh
 npm install
