@@ -4,6 +4,6 @@
     "replaywebpage": "2.4.6"
   },
   "scripts": {
-    "build": "cp node_modules/replaywebpage/ui.js asset/js/replaywebpage/ui.js && cp node_modules/replaywebpage/sw.js asset/js/replaywebpage/sw.js"
+    "build": "cp node_modules/replaywebpage/ui.js asset/vendor/replaywebpage/ui.js && cp node_modules/replaywebpage/sw.js asset/vendor/replaywebpage/sw.js"
   }
 }
