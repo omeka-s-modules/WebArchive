@@ -21,17 +21,19 @@ class WebArchiveRenderer extends AbstractRenderer implements RendererInterface
 
     public function render(PhpRenderer $view, MediaRepresentation $media, array $options = [])
     {
-        $mediaUrl = $media->originalUrl();
-        if ($this->isUnplayable($mediaUrl)) {
-            $message = $view->status()->isAdminRequest()
-                ? 'This archive is not available for playback. A server configuration issue was detected that prevents the player from loading the file.' // @translate
-                : 'This archive is not available for playback.'; // @translate
-            return '<p>' . $view->escapeHtml($view->translate($message)) . '</p>';
+        try {
+            $this->assertPlayable($media);
+        } catch (\RuntimeException $e) {
+            $message = $view->translate('This archive is not available for playback.');
+            if ($view->status()->isAdminRequest()) {
+                $message .= ' ' . $view->translate($e->getMessage());
+            }
+            return '<p>' . $view->escapeHtml($message) . '</p>';
         }
         $view->headScript()->appendFile($view->assetUrl('vendor/replaywebpage/ui.js', 'WebArchive'));
         $mediaData = $media->mediaData() ?? [];
         return $view->partial('omeka/media/renderer/web-archive', [
-            'mediaUrl' => $mediaUrl,
+            'mediaUrl' => $media->originalUrl(),
             'replayBase' => $view->assetUrl('vendor/replaywebpage/', 'WebArchive', false, false),
             'startUrl' => $mediaData['start_url'] ?? null,
             'embedMode' => $mediaData['embed_mode'] ?? $this->settings->get('webarchive_embed_mode', 'default'),
@@ -39,21 +41,23 @@ class WebArchiveRenderer extends AbstractRenderer implements RendererInterface
     }
 
     /**
-     * Check if the archive file is unplayable due to server-applied Content-Encoding.
+     * Perform checks to determine if an archive file is known to be unplayable.
      *
-     * If the server applies Content-Encoding (e.g. Apache mod_deflate compressing the
-     * response), the ReplayWeb.page player fails to load the file. Chrome throws
-     * TypeError: Failed to fetch; Firefox loads the player but shows no pages. The
-     * presence of the header alone triggers the failure — the fix is a server-side
-     * configuration change.
+     * Throws a RuntimeException with an admin-facing reason if a check fails.
      */
-    protected function isUnplayable(string $url): bool
+    protected function assertPlayable(MediaRepresentation $media): void
     {
+        // If the server applies Content-Encoding (e.g. Apache mod_deflate compressing
+        // the response), the ReplayWeb.page player fails to load the file. Chrome throws
+        // TypeError: Failed to fetch; Firefox loads the player but shows no pages. The
+        // presence of the header alone triggers the failure.
         try {
-            $response = $this->httpClient->setUri($url)->setMethod('HEAD')->send();
-            return (bool) $response->getHeaders()->get('Content-Encoding');
+            $response = $this->httpClient->setUri($media->originalUrl())->setMethod('HEAD')->send();
         } catch (\Exception $e) {
-            return false;
+            return;
+        }
+        if ($response->getHeaders()->get('Content-Encoding')) {
+            throw new \RuntimeException('The server is applying Content-Encoding to the file, which prevents the player from loading it.'); // @translate
         }
     }
 }
