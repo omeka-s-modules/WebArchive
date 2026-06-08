@@ -7,6 +7,8 @@ use Omeka\Api\Representation\MediaRepresentation;
 use Omeka\Media\FileRenderer\AbstractRenderer;
 use Omeka\Media\FileRenderer\RendererInterface;
 use Omeka\Settings\Settings;
+use Exception;
+use RuntimeException;
 
 class WebArchiveRenderer extends AbstractRenderer implements RendererInterface
 {
@@ -23,7 +25,7 @@ class WebArchiveRenderer extends AbstractRenderer implements RendererInterface
     {
         try {
             $this->assertPlayable($media);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $message = $view->translate('This archive is not available for playback.');
             if ($view->status()->isAdminRequest()) {
                 $message .= ' ' . $view->translate($e->getMessage());
@@ -47,17 +49,17 @@ class WebArchiveRenderer extends AbstractRenderer implements RendererInterface
      */
     protected function assertPlayable(MediaRepresentation $media): void
     {
-        // If the server applies Content-Encoding (e.g. Apache mod_deflate compressing
-        // the response), the ReplayWeb.page player fails to load the file. Chrome throws
-        // TypeError: Failed to fetch; Firefox loads the player but shows no pages. The
-        // presence of the header alone triggers the failure.
+        // If the server applies Content-Encoding (e.g. Apache mod_deflate compressing 
+        // the response), two things break the player: Content-Length is absent (the 
+        // player requires it to determine file size) and Range requests return 200 
+        // instead of 206 (the player requires 206 to load the file on demand).
         try {
             $response = $this->httpClient->setUri($media->originalUrl())->setMethod('HEAD')->send();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return;
         }
         if ($response->getHeaders()->get('Content-Encoding')) {
-            throw new \RuntimeException('The server is applying Content-Encoding to the file, which prevents the player from loading it.'); // @translate
+            throw new RuntimeException('The server is applying Content-Encoding to the file, which prevents the player from loading it.'); // @translate
         }
     }
 }
