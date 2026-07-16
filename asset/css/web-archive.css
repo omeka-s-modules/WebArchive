@@ -1,0 +1,10 @@
+.web-archive-error {
+    padding: 6px 10px;
+    border-radius: 3px;
+    background-color: #fae0e0;
+    color: #a91919;
+}
+
+.web-archive-error p {
+    margin: 0;
+}
