@@ -26,13 +26,13 @@ class WebArchiveRenderer extends AbstractRenderer implements RendererInterface
         try {
             $this->assertPlayable($media);
         } catch (RuntimeException $e) {
-            $view->headLink()->appendStylesheet($view->assetUrl('css/web-archive.css', 'WebArchive'));
             $message = $view->translate('This archive is not available for playback.');
             if ($view->status()->isAdminRequest()) {
                 $message .= ' ' . $view->translate($e->getMessage());
             }
             return '<div class="web-archive-error"><p>' . $view->escapeHtml($message) . '</p></div>';
         }
+        $view->headLink()->appendStylesheet($view->assetUrl('css/web-archive.css', 'WebArchive'));
         $view->headScript()->appendFile($view->assetUrl('vendor/replaywebpage/ui.js', 'WebArchive'));
         $mediaData = $media->mediaData() ?? [];
         return $view->partial('omeka/media/renderer/web-archive', [
