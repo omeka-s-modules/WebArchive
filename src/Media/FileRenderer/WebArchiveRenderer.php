@@ -50,9 +50,9 @@ class WebArchiveRenderer extends AbstractRenderer implements RendererInterface
      */
     protected function assertPlayable(MediaRepresentation $media): void
     {
-        // If the server applies Content-Encoding (e.g. Apache mod_deflate compressing 
-        // the response), two things break the player: Content-Length is absent (the 
-        // player requires it to determine file size) and Range requests return 200 
+        // If the server applies Content-Encoding (e.g. Apache mod_deflate compressing
+        // the response), two things break the player: Content-Length is absent (the
+        // player requires it to determine file size) and Range requests return 200
         // instead of 206 (the player requires 206 to load the file on demand).
         try {
             $response = $this->httpClient->setUri($media->originalUrl())->setMethod('HEAD')->send();

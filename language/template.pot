@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 13:27-0400\n"
+"POT-Creation-Date: 2026-07-24 15:49-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: src/Media/FileRenderer/WebArchiveRenderer.php:29
+msgid "This archive is not available for playback."
+msgstr ""
 
 #: view/common/media-fields-show.phtml:3
 msgid "Starting URL"
@@ -33,41 +37,51 @@ msgstr ""
 msgid "[Site default]"
 msgstr ""
 
+#: src/Media/FileRenderer/WebArchiveRenderer.php:63
+msgid ""
+"The server is applying Content-Encoding to the file, which prevents the "
+"player from loading it."
+msgstr ""
+
 #: src/Form/ConfigForm.php:15
 msgid "Default embed mode"
 msgstr ""
 
 #: src/Form/ConfigForm.php:16
 msgid ""
-"Controls what the player shows around the archived content. \"Default\" and "
-"\"Full\" both show the full interface with navigation; \"Full\" differs only "
-"in sizing behavior. \"Replay only\" shows just the archived page with no "
-"controls, and requires a starting URL to be meaningful. \"Replay with info\" "
-"shows the archived page alongside a metadata panel with title, date, and "
-"source URL."
+"Controls what the player shows around the archived content. \"Default\" "
+"shows the full player interface, with a browser-like address bar and the "
+"archive's pages list. \"Full\" adds the ReplayWeb.page navigation bar (with "
+"logo) above that interface. \"Replay only\" shows just the archived page "
+"with no controls, and requires a starting URL to be meaningful. \"Replay "
+"with info\" shows just the archived page plus a collapsible bar that reveals "
+"archive details, including a download link, the original URL, the date "
+"archived, and the file size."
 msgstr ""
 
-#: Module.php:22
+#: Module.php:21
 msgid "Replay only"
 msgstr ""
 
-#: Module.php:23
+#: Module.php:22
 msgid "Replay with info"
 msgstr ""
 
-#: Module.php:161
+#: Module.php:160
 msgid ""
 "Enter the original URL of the page to open first. Leave blank to show the "
 "archive's pages list, where viewers can browse all captured pages. Required "
 "if embed mode is set to \"Replay only\"."
 msgstr ""
 
-#: Module.php:167
+#: Module.php:166
 msgid ""
-"Controls what the player shows around the archived content. \"Default\" and "
-"\"Full\" both show the full interface with navigation; \"Full\" differs only "
-"in sizing behavior. \"Replay only\" shows just the archived page with no "
-"controls, and requires a starting URL to be meaningful. \"Replay with info\" "
-"shows the archived page alongside a metadata panel with title, date, and "
-"source URL. Leave blank to use the site default."
+"Controls what the player shows around the archived content. \"Default\" "
+"shows the full player interface, with a browser-like address bar and the "
+"archive's pages list. \"Full\" adds the ReplayWeb.page navigation bar (with "
+"logo) above that interface. \"Replay only\" shows just the archived page "
+"with no controls, and requires a starting URL to be meaningful. \"Replay "
+"with info\" shows just the archived page plus a collapsible bar that reveals "
+"archive details, including a download link, the original URL, the date "
+"archived, and the file size. Leave blank to use the site default."
 msgstr ""
