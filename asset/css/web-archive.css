@@ -1,8 +1,14 @@
+replay-web-page {
+    margin: 1rem 0;
+    border: 1px solid #dfdfdf;
+}
+
 .web-archive-error {
     padding: 6px 10px;
     border-radius: 3px;
     background-color: #fae0e0;
     color: #a91919;
+    margin: 1rem 0;
 }
 
 .web-archive-error p {
