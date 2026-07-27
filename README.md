@@ -1,6 +1,11 @@
 # Web Archive
 
-An [Omeka S](https://omeka.org/s/) module for ingesting and replaying web archive files.
+The Web Archive module adds support for ingesting and replaying web archive files as media. Web archives are captures of web pages or entire sites at a point in time. The module uses the [ReplayWeb.page player](https://replayweb.page/) to replay them in embedded players inside Omeka S public pages.
+
+Web archive files can be uploaded as media attached to items. They can also be ingested by providing a URL to a publicly available online web archive. This module will recognize and play .warc, .wacz, and .warc.gz files.
+
+- [Omeka S user manual](https://omeka.org/s/docs/user-manual/modules/webarchive/)
+- [Omeka S developer documentation](https://omeka.org/s/docs/developer/module_docs/WebArchive/)
 
 ## Installation
 
